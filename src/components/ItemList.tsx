@@ -1,4 +1,3 @@
-import React from 'react'
 import { Item } from '../types'
 
 interface ItemListProps {
@@ -6,7 +5,7 @@ interface ItemListProps {
   onRemoveItem: (id: string) => void
 }
 
-const ItemList: React.FC<ItemListProps> = ({ items, onRemoveItem }) => {
+const ItemList = ({ items, onRemoveItem }: ItemListProps) => {
   if (items.length === 0) {
     return (
       <p className="text-center text-purple-300 italic py-4">

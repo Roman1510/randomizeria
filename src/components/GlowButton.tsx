@@ -13,7 +13,7 @@ interface ButtonProps {
   icon?: React.ReactNode
 }
 
-const Button: React.FC<ButtonProps> = ({
+const Button = ({
   onClick,
   children,
   variant = 'primary',
@@ -23,7 +23,7 @@ const Button: React.FC<ButtonProps> = ({
   type = 'button',
   fullWidth = false,
   icon,
-}) => {
+}: ButtonProps) => {
   // Base styles all buttons share
   const baseStyles =
     'inline-flex items-center justify-center font-medium border transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-md'

@@ -29,8 +29,8 @@ function Model(props: ModelProps) {
         receiveShadow
         geometry={nodes.mesh_id27.geometry}
         material={materials['67']}
-        position={[0.015, 0.117, 0.069]}
-        rotation={[0.317, 0.784, 3.061]}
+        position={[0.015, 0.137, 0.069]}
+        rotation={[-0.035, 0.784, 3.061]}
         scale={[0.002, 0.001, 0.002]}
       />
       <mesh
@@ -47,8 +47,8 @@ function Model(props: ModelProps) {
         receiveShadow
         geometry={nodes.mesh_id57.geometry}
         material={materials['67']}
-        position={[0.187, 0.004, 0.177]}
-        rotation={[1.237, -0.733, 2.773]}
+        position={[0.177, 0.004, 0.177]}
+        rotation={[1.237, -0.833, 2.773]}
         scale={[0.002, 0.001, 0.002]}
       />
     </group>
@@ -79,7 +79,7 @@ function MouseTrackingCucumber() {
   })
 
   return (
-    <Float speed={1} floatIntensity={0.5} floatingRange={[-0.05, 0.05]}>
+    <Float speed={2.6} floatIntensity={0.4} floatingRange={[-0.05, 0.05]}>
       <Center>
         <group ref={group} scale={1.5}>
           <Model />
@@ -92,9 +92,8 @@ function MouseTrackingCucumber() {
 export default function CucumberViewer() {
   return (
     <div style={{ width: '100%', height: '100%' }}>
-      <Canvas camera={{ position: [0, 0, 1.5], fov: 35 }} dpr={[1, 2]}>
-        <ambientLight intensity={1} />
-        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+      <Canvas camera={{ position: [0, 0, 1.5], fov: 35 }} dpr={1}>
+        <ambientLight intensity={1.5} />
         <MouseTrackingCucumber />
       </Canvas>
     </div>

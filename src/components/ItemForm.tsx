@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, KeyboardEvent } from 'react'
+import { useState, ChangeEvent, KeyboardEvent } from 'react'
 import { MAX_ITEM_LENGTH, ERROR_MESSAGES } from '../const/constants'
 import Button from './GlowButton'
 
@@ -6,7 +6,7 @@ interface ItemFormProps {
   onAddItem: (text: string) => void
 }
 
-const ItemForm: React.FC<ItemFormProps> = ({ onAddItem }) => {
+const ItemForm = ({ onAddItem }: ItemFormProps) => {
   const [newItem, setNewItem] = useState<string>('')
   const [error, setError] = useState<string>('')
 

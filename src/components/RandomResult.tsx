@@ -1,11 +1,10 @@
-import React from 'react'
 import { Item } from '../types'
 
 interface RandomResultProps {
   item: Item | null
 }
 
-const RandomResult: React.FC<RandomResultProps> = ({ item }) => {
+const RandomResult = ({ item }: RandomResultProps) => {
   if (!item) return null
 
   return (
