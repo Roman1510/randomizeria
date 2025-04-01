@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import React, { useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { useGLTF } from '@react-three/drei'
+import { useGLTF, Float, Center } from '@react-three/drei'
 import * as THREE from 'three'
 import { GLTF } from 'three-stdlib'
 
@@ -55,33 +55,47 @@ function Model(props: ModelProps) {
   )
 }
 
-function FloatingCucumber() {
-  const groupRef = useRef<THREE.Group>(null)
+function MouseTrackingCucumber() {
+  const group = useRef<THREE.Group>(null)
 
-  useFrame(({ clock }) => {
-    const time = clock.getElapsedTime()
+  const mouse = useRef({ x: 0, y: 0 })
 
-    if (groupRef.current) {
-      groupRef.current.position.y = Math.sin(time * 0.2) * 0.1
+  useFrame(({ mouse: { x, y } }) => {
+    mouse.current.x = x
+    mouse.current.y = y
 
-      groupRef.current.rotation.y += 0.001
+    if (group.current) {
+      group.current.rotation.x = THREE.MathUtils.lerp(
+        group.current.rotation.x,
+        -y * 0.4,
+        0.1
+      )
+      group.current.rotation.y = THREE.MathUtils.lerp(
+        group.current.rotation.y,
+        x * 0.6,
+        0.1
+      )
     }
   })
 
   return (
-    <group ref={groupRef}>
-      <Model />
-    </group>
+    <Float speed={1} floatIntensity={0.5} floatingRange={[-0.05, 0.05]}>
+      <Center>
+        <group ref={group} scale={1.5}>
+          <Model />
+        </group>
+      </Center>
+    </Float>
   )
 }
 
 export default function CucumberViewer() {
   return (
     <div style={{ width: '100%', height: '100%' }}>
-      <Canvas camera={{ position: [0, 0, 0.55] }}>
+      <Canvas camera={{ position: [0, 0, 1.5], fov: 35 }} dpr={[1, 2]}>
         <ambientLight intensity={1} />
-
-        <FloatingCucumber />
+        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+        <MouseTrackingCucumber />
       </Canvas>
     </div>
   )
