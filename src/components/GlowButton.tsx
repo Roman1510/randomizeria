@@ -24,7 +24,7 @@ const Button = ({
     primary:
       'bg-purple-500 bg-opacity-80 hover:bg-opacity-100 text-white border-purple-400 hover:shadow-lg hover:shadow-purple-500/25 focus:ring-purple-400',
     secondary:
-      'bg-white bg-opacity-20 hover:bg-opacity-30 text-purple-200 hover:text-white border-purple-300 focus:ring-purple-300',
+      'bg-white bg-opacity-20 hover:bg-opacity-30 text-purple-300 hover:text-purple-700 hover:border-purple-700 border-purple-300 focus:ring-purple-300',
     danger:
       'bg-red-500 bg-opacity-80 hover:bg-opacity-100 text-white border-red-400 hover:shadow-lg hover:shadow-red-500/25 focus:ring-red-400',
   }

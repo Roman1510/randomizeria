@@ -190,7 +190,7 @@ const TeamTabs = ({
 
       {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-purple-300 bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white bg-opacity-95 backdrop-blur-md rounded-xl p-6 max-w-sm mx-4">
             <h3 className="text-lg font-bold text-purple-800 mb-4">
               Delete Team
