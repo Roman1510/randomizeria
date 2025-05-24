@@ -1,35 +1,31 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
-type SetValue<T> = React.Dispatch<React.SetStateAction<T>>
-
-function useLocalStorage<T>(key: string, initialValue: T): [T, SetValue<T>] {
+function useLocalStorage<T>(
+  key: string,
+  initialValue: T
+): [T, (value: T) => void] {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
-      const item = localStorage.getItem(key)
+      const item = window.localStorage.getItem(key)
       return item ? JSON.parse(item) : initialValue
     } catch (error) {
-      console.error('Error reading from localStorage:', error)
+      console.warn(`Error reading localStorage key "${key}":`, error)
       return initialValue
     }
   })
 
-  useEffect(() => {
+  const setValue = (value: T) => {
     try {
-      if (
-        storedValue === initialValue &&
-        Array.isArray(initialValue) &&
-        initialValue.length === 0
-      ) {
-        localStorage.removeItem(key)
-      } else {
-        localStorage.setItem(key, JSON.stringify(storedValue))
-      }
+      const valueToStore =
+        value instanceof Function ? value(storedValue) : value
+      setStoredValue(valueToStore)
+      window.localStorage.setItem(key, JSON.stringify(valueToStore))
     } catch (error) {
-      console.error('Error writing to localStorage:', error)
+      console.warn(`Error setting localStorage key "${key}":`, error)
     }
-  }, [key, storedValue, initialValue])
+  }
 
-  return [storedValue, setStoredValue]
+  return [storedValue, setValue]
 }
 
 export default useLocalStorage

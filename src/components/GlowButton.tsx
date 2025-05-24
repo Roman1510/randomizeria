@@ -1,80 +1,54 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import { ReactNode } from 'react'
 
 interface ButtonProps {
+  children: ReactNode
   onClick: () => void
-  children: React.ReactNode
-  variant?: 'primary' | 'secondary' | 'danger' | 'ghost'
+  variant?: 'primary' | 'secondary' | 'danger'
   size?: 'sm' | 'md' | 'lg'
-  disabled?: boolean
-  className?: string
-  type?: 'button' | 'submit' | 'reset'
   fullWidth?: boolean
-  icon?: React.ReactNode
+  disabled?: boolean
 }
 
 const Button = ({
-  onClick,
   children,
+  onClick,
   variant = 'primary',
   size = 'md',
-  disabled = false,
-  className = '',
-  type = 'button',
   fullWidth = false,
-  icon,
+  disabled = false,
 }: ButtonProps) => {
-  // Base styles all buttons share
-  const baseStyles =
-    'inline-flex items-center justify-center font-medium border transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-md'
+  const baseClasses =
+    'font-medium rounded-lg transition-all duration-300 border border-opacity-30 focus:outline-none focus:ring-2 focus:ring-opacity-50'
 
-  // Width style
-  const widthStyle = fullWidth ? 'w-full' : ''
-
-  // Size variations
-  const sizeStyles = {
-    sm: 'px-3 py-1.5 text-sm rounded-md',
-    md: 'px-4 py-2 text-sm rounded-md',
-    lg: 'px-5 py-2.5 text-base rounded-md',
-  }
-
-  // Style variations with improved visibility
-  const variantStyles = {
+  const variantClasses = {
     primary:
-      'border-transparent bg-purple-600 text-white hover:bg-purple-700 focus:ring-purple-500 disabled:bg-purple-400',
+      'bg-purple-500 bg-opacity-80 hover:bg-opacity-100 text-white border-purple-400 hover:shadow-lg hover:shadow-purple-500/25 focus:ring-purple-400',
     secondary:
-      'border-gray-300 bg-white text-gray-800 hover:bg-gray-50 focus:ring-purple-500 disabled:bg-gray-200 disabled:text-gray-500',
+      'bg-white bg-opacity-20 hover:bg-opacity-30 text-purple-200 hover:text-white border-purple-300 focus:ring-purple-300',
     danger:
-      'border-transparent bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 disabled:bg-red-400',
-    ghost:
-      'border-transparent bg-transparent text-white hover:bg-white hover:bg-opacity-20 focus:ring-purple-500 disabled:text-gray-400',
+      'bg-red-500 bg-opacity-80 hover:bg-opacity-100 text-white border-red-400 hover:shadow-lg hover:shadow-red-500/25 focus:ring-red-400',
   }
 
-  // Icon spacing
-  const iconSpacing = icon ? 'gap-2' : ''
+  const sizeClasses = {
+    sm: 'px-3 py-1.5 text-sm',
+    md: 'px-4 py-2 text-sm',
+    lg: 'px-6 py-3 text-base',
+  }
+
+  const disabledClasses = disabled
+    ? 'opacity-50 cursor-not-allowed hover:bg-opacity-80 hover:shadow-none'
+    : 'cursor-pointer'
+
+  const widthClasses = fullWidth ? 'w-full' : ''
 
   return (
-    <motion.button
-      onClick={onClick}
-      type={type}
+    <button
+      onClick={disabled ? undefined : onClick}
+      className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${disabledClasses} ${widthClasses}`}
       disabled={disabled}
-      className={`${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${widthStyle} ${iconSpacing} ${className}`}
-      whileHover={
-        disabled ? {} : { y: -2, boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15)' }
-      }
-      whileTap={
-        disabled ? {} : { y: 0, boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)' }
-      }
-      initial={{ y: 0 }}
-      transition={{
-        type: 'spring',
-        stiffness: 500,
-        damping: 15,
-      }}
     >
-      {icon && <span className="flex-shrink-0">{icon}</span>}
       {children}
-    </motion.button>
+    </button>
   )
 }
 
